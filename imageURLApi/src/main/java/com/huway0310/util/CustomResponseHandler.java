@@ -17,10 +17,10 @@ import org.json.JSONObject;
 public class CustomResponseHandler implements ResponseHandler {
 
 	@Override
-	public ResponseObject handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
+	public ImgUrlResponseObject handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
 		// TODO Auto-generated method stub
 		int status = response.getStatusLine().getStatusCode();
-        ResponseObject rspObject = new ResponseObject();
+        ImgUrlResponseObject rspObject = new ImgUrlResponseObject();
         rspObject.setStatusCode(status);
 		
         if (status >= 200 && status < 300) {

@@ -1,6 +1,6 @@
 package com.huway0310.util;
 
-public class ResponseObject {
+public class ImgUrlResponseObject {
 	
 	private String link;
     private String id;

@@ -17,6 +17,7 @@ import com.huway0310.model.FormWrapper;
 import com.huway0310.service.FormWrapperService;
 import com.huway0310.service.UploadService;
 import com.huway0310.util.MutiFileToBase64;
+import com.huway0310.util.ImgUrlResponseObject;
 
 @RestController
 public class ImageJobController {
@@ -34,22 +35,22 @@ public class ImageJobController {
 		
 		FormWrapper formWrapper=new FormWrapper();
 		
-		ArrayList<String> imagArrayList=new ArrayList<>();
+		ArrayList<ImgUrlResponseObject> imagArrayList=new ArrayList<>();
 		
 		if (!file.isEmpty()) {
 			
 			for (MultipartFile multipartFile : file) {
 				String Base64Img;
 				try {
-					Base64Img = MutiFileToBase64.fileToBase64(multipartFile);
+					 Base64Img = MutiFileToBase64.fileToBase64(multipartFile);
 					
-					 String uploadImageUrl = uploadService.uploadImage(Base64Img);//得到圖片url
+					 ImgUrlResponseObject uploadImageInfo = uploadService.uploadImage(Base64Img);//得到圖片url
 					
 					 formWrapper = formWrapperService.getJson(aFormWrapper,file);
-				
-					 System.out.println("得到圖片url"+uploadImageUrl);
+					 
+					 System.out.println("得到圖片url"+uploadImageInfo.getLink());
 					
-					 imagArrayList.add(uploadImageUrl);
+					 imagArrayList.add(uploadImageInfo);
 				
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -58,7 +59,7 @@ public class ImageJobController {
 				
 			}
 			
-			formWrapper.setImageLinks(imagArrayList);
+			formWrapper.setResponseObjects(imagArrayList);
 			
 			
 		}else {

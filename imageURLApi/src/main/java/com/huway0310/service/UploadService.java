@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.huway0310.util.CustomResponseHandler;
-import com.huway0310.util.ResponseObject;
+import com.huway0310.util.ImgUrlResponseObject;
 
 @Service
 public class UploadService {
@@ -28,9 +28,9 @@ public class UploadService {
 	public static final String Token = "8018668808c11b87878a2268c4c8b61d04ba4442"; // 填入 token
 	public static final String Album = "XXXX"; // 若要指定傳到某個相簿，就填入相簿的 ID
 
-	public String uploadImage(String base64String) {
+	public ImgUrlResponseObject uploadImage(String base64String) {
 
-		String uploadStringLink = "";
+		ImgUrlResponseObject responseBody = null;
 
 		CloseableHttpClient httpClient = HttpClients.createDefault();// 使用Apache HttpClient將HTTP Request推送到伺服器
 		HttpPost httpPostRequest = new HttpPost(IMGUR_URL);
@@ -45,11 +45,11 @@ public class UploadService {
 		try { 
 			httpPostRequest.setEntity(new UrlEncodedFormEntity(params));//Post帶我們的圖片
 			
-			ResponseObject responseBody = (ResponseObject) httpClient.execute(httpPostRequest, customResponseHandler);//執行並處理http訊息返回客制訊息轉型
+			responseBody = (ImgUrlResponseObject) httpClient.execute(httpPostRequest, customResponseHandler);//執行並處理http訊息返回客制訊息轉型
 			 
 			LOGGER.info(responseBody.toString());
 			
-			uploadStringLink=responseBody.getLink();
+			
 			
 			int status = responseBody.getStatusCode();
 			
@@ -73,7 +73,7 @@ public class UploadService {
 			e.printStackTrace();
 		}
 
-		return uploadStringLink;
+		return responseBody;
 	}
 
 }

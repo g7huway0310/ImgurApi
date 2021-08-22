@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.huway0310.util.ImgUrlResponseObject;
 
 //前端VO
 public class FormWrapper {
@@ -13,7 +14,7 @@ public class FormWrapper {
 	
 	private String form2;
 	
-	private ArrayList<String> imageLinks;//上傳圖片網址
+	private ArrayList<ImgUrlResponseObject> responseObjects;//上傳圖片資訊
 	
 	private Integer fileCount;
 
@@ -46,14 +47,13 @@ public class FormWrapper {
 		this.form2 = form2;
 	}
 
-	public ArrayList<String> getImageLinks() {
-		return imageLinks;
+	public ArrayList<ImgUrlResponseObject> getResponseObjects() {
+		return responseObjects;
 	}
 
-	public void setImageLinks(ArrayList<String> imageLinks) {
-		this.imageLinks = imageLinks;
+	public void setResponseObjects(ArrayList<ImgUrlResponseObject> responseObjects) {
+		this.responseObjects = responseObjects;
 	}
 
 	
-
 }
