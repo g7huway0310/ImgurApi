@@ -1,5 +1,7 @@
 package com.huway0310.model;
 
+import java.util.ArrayList;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -8,8 +10,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class FormWrapper {
 
 	private String form1;
+	
 	private String form2;
-	private String imageLink;
+	
+	private ArrayList<String> imageLinks;//上傳圖片網址
 	
 	private Integer fileCount;
 
@@ -42,12 +46,14 @@ public class FormWrapper {
 		this.form2 = form2;
 	}
 
-	public String getImageLink() {
-		return imageLink;
+	public ArrayList<String> getImageLinks() {
+		return imageLinks;
 	}
 
-	public void setImageLink(String imageLink) {
-		this.imageLink = imageLink;
+	public void setImageLinks(ArrayList<String> imageLinks) {
+		this.imageLinks = imageLinks;
 	}
+
+	
 
 }

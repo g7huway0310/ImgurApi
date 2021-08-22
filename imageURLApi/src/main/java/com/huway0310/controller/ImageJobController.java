@@ -28,11 +28,13 @@ public class ImageJobController {
 	private FormWrapperService formWrapperService;
 
 	@PostMapping(value = "/upload", consumes = { MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE})
-	public List<FormWrapper> upload(@RequestPart("formWrpper") String aFormWrapper, @RequestPart("file") List<MultipartFile> file) {
+	public FormWrapper upload(@RequestPart("formWrpper") String aFormWrapper, @RequestPart("file") List<MultipartFile> file) {
 
 		System.out.println(aFormWrapper);
 		
-		ArrayList<FormWrapper> arrayList=new ArrayList<>();
+		FormWrapper formWrapper=new FormWrapper();
+		
+		ArrayList<String> imagArrayList=new ArrayList<>();
 		
 		if (!file.isEmpty()) {
 			
@@ -41,15 +43,13 @@ public class ImageJobController {
 				try {
 					Base64Img = MutiFileToBase64.fileToBase64(multipartFile);
 					
-					String uploadImageUrl = uploadService.uploadImage(Base64Img);//得到圖片url
+					 String uploadImageUrl = uploadService.uploadImage(Base64Img);//得到圖片url
 					
-					FormWrapper formWrapper = formWrapperService.getJson(aFormWrapper,file);
+					 formWrapper = formWrapperService.getJson(aFormWrapper,file);
+				
+					 System.out.println("得到圖片url"+uploadImageUrl);
 					
-					System.out.println("得到圖片url"+uploadImageUrl);
-					
-					formWrapper.setImageLink(uploadImageUrl);
-					
-					arrayList.add(formWrapper);
+					 imagArrayList.add(uploadImageUrl);
 				
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -58,13 +58,16 @@ public class ImageJobController {
 				
 			}
 			
+			formWrapper.setImageLinks(imagArrayList);
+			
+			
 		}else {
 			
 			System.out.println("空的mutilfile");
 		}
 		
 		
-		return arrayList;
+		return formWrapper;
 	
 	
 	}
