@@ -16,10 +16,17 @@ import org.json.JSONObject;
 
 public class CustomResponseHandler implements ResponseHandler {
 
+	
+	
+	
 	@Override
 	public ImgUrlResponseObject handleResponse(HttpResponse response) throws ClientProtocolException, IOException {
+		//call imguriAPI -> response
+		
+		
+		
 		// TODO Auto-generated method stub
-		int status = response.getStatusLine().getStatusCode();
+		int status = response.getStatusLine().getStatusCode(); 
         ImgUrlResponseObject rspObject = new ImgUrlResponseObject();
         rspObject.setStatusCode(status);
 		
@@ -27,16 +34,26 @@ public class CustomResponseHandler implements ResponseHandler {
         	
         	HttpEntity entity = response.getEntity();
         	
+        	System.out.println("entity="+entity.toString());
+        	
+        	System.out.println(entity);
+        	
+        	
         	Header headerEncoding = response.getEntity().getContentEncoding();
         	
-        	 Charset enocodedCharset = (headerEncoding == null) ? StandardCharsets.UTF_8 : Charsets.toCharset(headerEncoding.toString());
+        	Charset enocodedCharset = (headerEncoding == null) ? StandardCharsets.UTF_8 : Charsets.toCharset(headerEncoding.toString());
         	
         	if (entity != null) {
-                String retSrc = EntityUtils.toString(entity,enocodedCharset); 
+        		
+        		
+        		
+                String retSrc = EntityUtils.toString(entity,enocodedCharset); //entity轉字串
+                
+                
+                
                 // parsing JSON
                 JSONObject jsonResponse = new JSONObject(retSrc); //Convert String to JSON Object
               
-             
                 System.out.println(retSrc);
                 
                 //因為IMGUR_URL回傳資料格式如下

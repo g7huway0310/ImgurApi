@@ -16,6 +16,7 @@ public class MutiFileToBase64 {
 	private static final Logger LOGGER = Logger.getLogger(MutiFileToBase64.class.getName());
 
 
+	//將圖片轉乘base字串
 	public static String fileToBase64(MultipartFile file) throws IOException {
 
 		InputStream inputStream = file.getInputStream();

@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -33,20 +34,38 @@ public class UploadService {
 		ImgUrlResponseObject responseBody = null;
 
 		CloseableHttpClient httpClient = HttpClients.createDefault();// 使用Apache HttpClient將HTTP Request推送到伺服器
-		HttpPost httpPostRequest = new HttpPost(IMGUR_URL);
+		
+		
+		
+		HttpPost httpPostRequest = new HttpPost(IMGUR_URL);//Post到這個網址
+		
 		httpPostRequest.setHeader("Authorization", "Client-ID " + CLIENT_ID);// Client-ID後一定要空白
 
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("image", base64String));
+		List<NameValuePair> params = new ArrayList<NameValuePair>();//{KV 配對 參數}
+		
+		params.add(new BasicNameValuePair("image", base64String));//{imag,base64omfkoasmkdofmasodfmokkosdfkdam}
 
+		
+		
+		
 		// 處理Response
 		CustomResponseHandler customResponseHandler = new CustomResponseHandler();
 
 		try { 
 			httpPostRequest.setEntity(new UrlEncodedFormEntity(params));//Post帶我們的圖片
+		
 			
-			responseBody = (ImgUrlResponseObject) httpClient.execute(httpPostRequest, customResponseHandler);//執行並處理http訊息返回客制訊息轉型
-			 
+			
+			
+			
+			//1
+			CloseableHttpResponse response = httpClient.execute(httpPostRequest);
+			//2
+			responseBody = customResponseHandler.handleResponse(response);
+			
+			//httpClient.execute(httpPostRequest, customResponseHandler);=上面1+2
+			
+	
 			LOGGER.info(responseBody.toString());
 			
 			
